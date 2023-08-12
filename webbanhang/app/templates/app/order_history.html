@@ -1,0 +1,34 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block content_checkout %}
+<div class="container mt-3">
+    <div class="text-left">
+        <h6>Lịch sử mua hàng</h6>
+    </div>
+    {% for order in orders %}
+    <div class="card p-3 mb-2">
+        <div class="d-flex flex-row">
+            <div class="d-flex flex-column">
+                <h6 class="mb-1 text-primary">Mã đơn hàng: {{ order.id }}</h6>
+                <p class="comment-text">Tổng tiền: {{ order.get_cart_total|floatformat|intcomma }} VNĐ</p>
+                <ul>
+                    {% for item in order.orderitem_set.all %}
+                        <div style="flex:2"><img class="row-image" src="{{item.product.ImageURL}}"></div>
+                            <li>{{ item.product.name }} (Số lượng: {{ item.quantity }})</li>
+                    {% endfor %}
+                </ul>
+                <p class="comment-text">Trạng thái: {% if order.complete %}Đã thanh toán{% else %}Chưa thanh toán{% endif %}</p>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end">
+            <span class="text-muted fw-normal fs-10">{{ order.date_order }}</span>
+        </div>
+    </div>
+    {% empty %}
+    <p>Khách hàng chưa có đơn hàng nào!</p>
+    {% endfor %}
+</div>
+
+{% endblock content_checkout %}
