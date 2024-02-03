@@ -1,1 +1,1 @@
-# python_django_webbanhang
+# python_django_shoppingweb
